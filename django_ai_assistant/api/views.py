@@ -136,7 +136,8 @@ def list_thread_messages(request, thread_id: Any):
 )
 @with_cast_id
 def create_thread_message(request, thread_id: Any, payload: ThreadMessageIn):
-    thread = ThreadModel.objects.get(id=thread_id)
+    # thread = ThreadModel.objects.get(id=thread_id)
+    thread = get_object_or_404(ThreadModel, id=thread_id)
 
     use_cases.create_message(
         assistant_id=payload.assistant_id,

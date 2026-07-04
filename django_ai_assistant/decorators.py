@@ -1,10 +1,20 @@
 import uuid
 from functools import wraps
+from django.http import Http404
+
+
+# def _cast_id(item_id, model):
+#     if isinstance(item_id, str) and "UUID" in model._meta.pk.get_internal_type():
+#         return uuid.UUID(item_id)
+#     return item_id
 
 
 def _cast_id(item_id, model):
     if isinstance(item_id, str) and "UUID" in model._meta.pk.get_internal_type():
-        return uuid.UUID(item_id)
+        try:
+            return uuid.UUID(item_id)
+        except ValueError:
+            raise Http404("Invalid ID format")
     return item_id
 
 

@@ -15,12 +15,12 @@ class AIAssistantConfig(AppConfig):
         for app in apps.get_app_configs():
             try:
                 import_module(f"{app.name}.ai_assistants")
-            except ModuleNotFoundError:
+            except ModuleNotFoundError as err:
                 # If the module exists but there is an error in it, we want to raise the error:
                 try:
                     # This raises on single-module app, e.g. django-health-check v4.0+:
                     # health_check.contrib.celery.
                     if importlib.util.find_spec(f"{app.name}.ai_assistants"):
-                        raise
+                        raise err
                 except ModuleNotFoundError:
                     pass

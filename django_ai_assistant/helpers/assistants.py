@@ -242,11 +242,13 @@ class AIAssistant(abc.ABC):  # noqa: F821
         # Remove self from each tool args_schema:
         for tool in tools:
             if tool.args_schema:
-                if isinstance(tool.args_schema.__fields_set__, set):
-                    tool.args_schema.__fields_set__.remove("self")
-                tool.args_schema.__fields__.pop("self", None)
+                if hasattr(tool.args_schema, "model_fields"):
+                    tool.args_schema.model_fields.pop("self", None)
+                else:
+                    tool.args_schema.__fields__.pop("self", None)
 
         self._method_tools = tools
+        
 
     @classmethod
     def get_cls_registry(cls) -> dict[str, type["AIAssistant"]]:
