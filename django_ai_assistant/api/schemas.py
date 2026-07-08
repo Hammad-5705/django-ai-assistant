@@ -4,7 +4,6 @@ from django.utils import timezone
 
 from ninja import Field, ModelSchema, Schema
 
-# from django_ai_assistant.models import Thread
 from django_ai_assistant.models import Thread as ThreadModel
 
 
