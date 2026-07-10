@@ -2,12 +2,16 @@ import uuid
 from functools import wraps
 
 
+class InvalidObjectIdError(ValueError):
+    """Raised when an object ID cannot be converted to the expected type."""
+
+
 def _cast_id(item_id, model):
     if isinstance(item_id, str) and "UUID" in model._meta.pk.get_internal_type():
         try:
             return uuid.UUID(item_id)
-        except ValueError:
-            raise ValueError("Invalid UUID format")
+        except ValueError as exc:
+            raise InvalidObjectIdError("Invalid UUID format") from exc
     return item_id
 
 
