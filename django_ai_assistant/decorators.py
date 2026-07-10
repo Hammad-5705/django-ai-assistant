@@ -1,6 +1,5 @@
 import uuid
 from functools import wraps
-from django.http import Http404
 
 
 def _cast_id(item_id, model):
