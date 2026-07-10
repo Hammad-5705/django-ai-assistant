@@ -15,7 +15,6 @@ class Assistant(Schema):
 
 class Thread(ModelSchema):
     class Meta:
-        # model = Thread
         model = ThreadModel
         fields = (
             "id",
